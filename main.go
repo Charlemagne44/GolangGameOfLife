@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 /*
 1.Build a data structure to store the board state
 2.“Pretty-print” the board to the terminal
@@ -13,5 +11,7 @@ import "fmt"
 */
 
 func main() {
-	fmt.Println("game of life")
+	deadBoard := initDeadBoard(10, 10)
+	randomizeBoard(deadBoard)
+	printBoard(deadBoard)
 }
