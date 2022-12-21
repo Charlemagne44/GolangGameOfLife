@@ -6,9 +6,9 @@ import (
 )
 
 type Board struct {
-	width  int
-	height int
-	board  [][]int
+	Width  int
+	Height int
+	Board  [][]int
 }
 
 // create a board of a certain width and height where
