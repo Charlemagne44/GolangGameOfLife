@@ -18,4 +18,5 @@ func main() {
 	board.initDeadBoard()
 	board.randomizeBoard(.20)
 	board.printBoard()
+	board.render()
 }
