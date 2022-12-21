@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 1.Build a data structure to store the board state
 2.“Pretty-print” the board to the terminal
@@ -12,11 +14,15 @@ package main
 
 func main() {
 	board := &Board{
-		Width:  10,
-		Height: 10,
+		Width:  5,
+		Height: 5,
 	}
 	board.initDeadBoard()
-	board.randomizeBoard(.20)
+	board.randomizeBoard(.50)
 	board.printBoard()
-	board.render()
+	// board.render()
+	board.nextState()
+	fmt.Print("\n\n\n")
+	board.printBoard()
+	// board.render()
 }

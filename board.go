@@ -46,3 +46,77 @@ func (board *Board) randomizeBoard(likelyAlive float64) {
 		}
 	}
 }
+
+// this functionc calculates the next board state
+// in the game of life. 1 alive neighbor to alive -> dead.
+// 2-3 -> alive, > 3 -> dead, dead cell w/ 3 alive
+// neighbors -> alive
+func (board *Board) nextState() {
+	for y, row := range board.Board {
+		for x, col := range row {
+			alive_count := 0
+			if y == 0 && x == 0 {
+				// top left corner
+				alive_count = board.Board[y+1][x] + // s
+					board.Board[y][x+1] + // e
+					board.Board[y+1][x+1] // se
+			} else if y == 0 && x == board.Width-1 {
+				// top right corner
+				alive_count = board.Board[y+1][x] + // s
+					board.Board[y][x-1] + // w
+					board.Board[y+1][x-1] // sw
+			} else if y == board.Height-1 && x == 0 {
+				// bottom left corner
+				alive_count = board.Board[y-1][x] + // n
+					board.Board[y][x+1] + // e
+					board.Board[y-1][x+1] // ne
+			} else if y == board.Height-1 && x == board.Height-1 {
+				// bottom right corner
+				alive_count = board.Board[y-1][x] + // n
+					board.Board[y][x-1] + // w
+					board.Board[y-1][x-1] // nw
+			} else if y == 0 {
+				// top edge
+				alive_count = board.Board[y][x-1] + // w
+					board.Board[y+1][x-1] + // sw
+					board.Board[y+1][x] + // s
+					board.Board[y+1][x+1] + // se
+					board.Board[y][x+1] // e
+			} else if y == board.Height-1 {
+				// bottom edge
+				alive_count = board.Board[y][x-1] + // w
+					board.Board[y-1][x-1] + // nw
+					board.Board[y-1][x] + // n
+					board.Board[y-1][x+1] + // ne
+					board.Board[y][x+1] // e
+			} else if x == 0 {
+				// left edge
+				alive_count = board.Board[y-1][x] + // n
+					board.Board[y-1][x+1] + // ne
+					board.Board[y][x+1] + // e
+					board.Board[y+1][x+1] + // se
+					board.Board[y+1][x] // s
+			} else if x == board.Width-1 {
+				// right edge
+				alive_count = board.Board[y-1][x] + // n
+					board.Board[y-1][x-1] + // nw
+					board.Board[y][x-1] + // w
+					board.Board[y+1][x-1] + // sw
+					board.Board[y+1][x] // s
+			}
+
+			// reassign values based on neighor counts
+			if col == 1 {
+				if alive_count <= 1 {
+					board.Board[y][x] = 0
+				} else if alive_count > 3 {
+					board.Board[y][x] = 0
+				}
+			} else {
+				if alive_count == 3 {
+					board.Board[y][x] = 1
+				}
+			}
+		}
+	}
+}

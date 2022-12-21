@@ -25,4 +25,5 @@ func (board *Board) render() {
 	for i := 0; i < (board.Width*3)+2; i++ {
 		fmt.Print("-")
 	}
+	fmt.Print("\n")
 }
