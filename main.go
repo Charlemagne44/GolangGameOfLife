@@ -11,11 +11,11 @@ package main
 */
 
 func main() {
-	board := Board{
+	board := &Board{
 		Width:  10,
 		Height: 10,
 	}
-	board.Board = initDeadBoard(board.Width, board.Height)
-	randomizeBoard(board.Board, 0.2)
-	printBoard(board.Board)
+	board.initDeadBoard()
+	board.randomizeBoard(.20)
+	board.printBoard()
 }

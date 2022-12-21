@@ -13,18 +13,17 @@ type Board struct {
 
 // create a board of a certain width and height where
 // all values are left as 0 (dead)
-func initDeadBoard(width, height int) [][]int {
+func (board *Board) initDeadBoard() {
 	// initialize  the board
-	deadBoard := make([][]int, height)
-	for i := 0; i < height; i++ {
-		deadBoard[i] = make([]int, width)
+	board.Board = make([][]int, board.Height)
+	for i := 0; i < board.Height; i++ {
+		board.Board[i] = make([]int, board.Width)
 	}
-	return deadBoard
 }
 
 // print the board in matrix format
-func printBoard(board [][]int) {
-	for _, row := range board {
+func (board *Board) printBoard() {
+	for _, row := range board.Board {
 		for _, col := range row {
 			fmt.Printf("%d ", col)
 		}
@@ -36,13 +35,13 @@ func printBoard(board [][]int) {
 // 0 and 1 (dead and alive), likely alive is
 // the factor used in RNG, think of it as the
 // % chance we set a particular cell to 1(alive)
-func randomizeBoard(board [][]int, likelyAlive float64) {
-	for y := 0; y < len(board); y++ {
-		for x := 0; x < len(board[0]); x++ {
+func (board *Board) randomizeBoard(likelyAlive float64) {
+	for y := 0; y < len(board.Board); y++ {
+		for x := 0; x < len(board.Board[0]); x++ {
 			if rand.Float64() < likelyAlive {
-				board[x][y] = 1
+				board.Board[x][y] = 1
 			} else {
-				board[x][y] = 0
+				board.Board[x][y] = 0
 			}
 		}
 	}
