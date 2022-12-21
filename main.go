@@ -16,6 +16,6 @@ func main() {
 		Height: 10,
 	}
 	board.Board = initDeadBoard(board.Width, board.Height)
-	randomizeBoard(board.Board)
+	randomizeBoard(board.Board, 0.2)
 	printBoard(board.Board)
 }
