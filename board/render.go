@@ -1,8 +1,8 @@
-package main
+package game
 
 import "fmt"
 
-func (board *Board) render() {
+func (board *Board) Render() {
 	// top edge
 	for i := 0; i < (board.Width*3)+2; i++ {
 		fmt.Print("-")

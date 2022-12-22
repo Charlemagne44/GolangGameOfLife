@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	game "gameOfLife/board"
+)
 
 /*
 1.Build a data structure to store the board state
@@ -13,16 +16,18 @@ import "fmt"
 */
 
 func main() {
-	board := &Board{
-		Width:  5,
-		Height: 5,
+
+	board := &game.Board{
+		Width:  3,
+		Height: 3,
 	}
-	board.initDeadBoard()
-	board.randomizeBoard(.50)
-	board.printBoard()
-	// board.render()
-	board.nextState()
-	fmt.Print("\n\n\n")
-	board.printBoard()
-	// board.render()
+
+	board.InitDeadBoard()
+	board.RandomizeBoard(.50)
+	board.PrintBoard()
+	// board.Render()
+	board.NextState()
+	fmt.Print("\n\n")
+	board.PrintBoard()
+	// board.Render()
 }

@@ -1,4 +1,4 @@
-package main
+package game
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ type Board struct {
 
 // create a board of a certain width and height where
 // all values are left as 0 (dead)
-func (board *Board) initDeadBoard() {
+func (board *Board) InitDeadBoard() {
 	// initialize  the board
 	board.Board = make([][]int, board.Height)
 	for i := 0; i < board.Height; i++ {
@@ -22,7 +22,7 @@ func (board *Board) initDeadBoard() {
 }
 
 // print the board in matrix format
-func (board *Board) printBoard() {
+func (board *Board) PrintBoard() {
 	for _, row := range board.Board {
 		for _, col := range row {
 			fmt.Printf("%d ", col)
@@ -35,7 +35,7 @@ func (board *Board) printBoard() {
 // 0 and 1 (dead and alive), likely alive is
 // the factor used in RNG, think of it as the
 // % chance we set a particular cell to 1(alive)
-func (board *Board) randomizeBoard(likelyAlive float64) {
+func (board *Board) RandomizeBoard(likelyAlive float64) {
 	for y := 0; y < len(board.Board); y++ {
 		for x := 0; x < len(board.Board[0]); x++ {
 			if rand.Float64() < likelyAlive {
@@ -51,7 +51,7 @@ func (board *Board) randomizeBoard(likelyAlive float64) {
 // in the game of life. 1 alive neighbor to alive -> dead.
 // 2-3 -> alive, > 3 -> dead, dead cell w/ 3 alive
 // neighbors -> alive
-func (board *Board) nextState() {
+func (board *Board) NextState() {
 	for y, row := range board.Board {
 		for x, col := range row {
 			alive_count := 0
@@ -103,6 +103,16 @@ func (board *Board) nextState() {
 					board.Board[y][x-1] + // w
 					board.Board[y+1][x-1] + // sw
 					board.Board[y+1][x] // s
+			} else {
+				// center
+				alive_count = board.Board[y-1][x] + // n
+					board.Board[y-1][x-1] + // nw
+					board.Board[y][x-1] + // w
+					board.Board[y+1][x-1] + // sw
+					board.Board[y+1][x] + // s
+					board.Board[y+1][x+1] + // se
+					board.Board[y][x+1] + // e
+					board.Board[y-1][x+1] // ne
 			}
 
 			// reassign values based on neighor counts
