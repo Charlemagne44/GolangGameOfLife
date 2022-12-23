@@ -15,6 +15,25 @@ func EquivalentSlice(initState, expectedState [][]int) bool {
 	return true
 }
 
+func TestLoadFromFile(t *testing.T) {
+	board := LoadFromFile("../saves/toad.txt")
+	expectedBoard := Board{
+		Width:  6,
+		Height: 6,
+		Board: [][]int{
+			{0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 1, 1, 0},
+			{0, 1, 1, 1, 0, 0},
+			{0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0},
+		},
+	}
+	if !EquivalentSlice(board.Board, expectedBoard.Board) {
+		t.Fatal()
+	}
+}
+
 func TestNextStateDeadCell(t *testing.T) {
 	// dead cell with no live neighbor
 	initBoard := Board{

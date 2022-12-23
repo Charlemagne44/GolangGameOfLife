@@ -22,14 +22,20 @@ func main() {
 	turns := flag.Int("t", 10, "how many turns of the game to play")
 	sleep := flag.Int("s", 3, "seconds of sleep between each turn")
 	probability := flag.Float64("p", 0.50, "probability starting cell is alive")
+	file := flag.String("f", "", "load a premade board from a file")
 	flag.Parse()
 
-	board := game.Board{
-		Width:  *width,
-		Height: *height,
+	var board game.Board
+	if *file != "" {
+		board = game.LoadFromFile(*file)
+	} else {
+		board = game.Board{
+			Width:  *width,
+			Height: *height,
+		}
+		board.InitDeadBoard()
+		board.RandomizeBoard(*probability)
 	}
-	board.InitDeadBoard()
-	board.RandomizeBoard(*probability)
 	for i := 0; i < *turns; i++ {
 		board.Render()
 		board.NextState()
