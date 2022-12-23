@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"flag"
 	game "gameOfLife/board"
+	"time"
 )
 
 /*
@@ -16,18 +17,22 @@ import (
 */
 
 func main() {
+	height := flag.Int("h", 10, "height of the board")
+	width := flag.Int("w", 10, "width of the board")
+	turns := flag.Int("t", 10, "how many turns of the game to play")
+	sleep := flag.Int("s", 3, "seconds of sleep between each turn")
+	probability := flag.Float64("p", 0.50, "probability starting cell is alive")
+	flag.Parse()
 
-	board := &game.Board{
-		Width:  3,
-		Height: 3,
+	board := game.Board{
+		Width:  *width,
+		Height: *height,
 	}
-
 	board.InitDeadBoard()
-	board.RandomizeBoard(.50)
-	board.PrintBoard()
-	// board.Render()
-	board.NextState()
-	fmt.Print("\n\n")
-	board.PrintBoard()
-	// board.Render()
+	board.RandomizeBoard(*probability)
+	for i := 0; i < *turns; i++ {
+		board.Render()
+		board.NextState()
+		time.Sleep(time.Second * time.Duration(*sleep))
+	}
 }
