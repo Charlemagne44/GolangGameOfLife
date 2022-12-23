@@ -52,6 +52,21 @@ func (board *Board) RandomizeBoard(likelyAlive float64) {
 // 2-3 -> alive, > 3 -> dead, dead cell w/ 3 alive
 // neighbors -> alive
 func (board *Board) NextState() {
+	// generate a deep copy of the current board
+	copy := make([][]int, board.Height)
+	for i := 0; i < board.Height; i++ {
+		copy[i] = make([]int, board.Width)
+	}
+	for i := 0; i < board.Height; i++ {
+		for j := 0; j < board.Width; j++ {
+			copy[i][j] = board.Board[i][j]
+		}
+	}
+	// assign an alive neighbor count to each cell
+	// following game of life rules. Neighbors
+	// changes should be based on current board, but
+	// applied to deep copy, followed by assigning board
+	// to deep copy
 	for y, row := range board.Board {
 		for x, col := range row {
 			alive_count := 0
@@ -118,15 +133,16 @@ func (board *Board) NextState() {
 			// reassign values based on neighor counts
 			if col == 1 {
 				if alive_count <= 1 {
-					board.Board[y][x] = 0
+					copy[y][x] = 0
 				} else if alive_count > 3 {
-					board.Board[y][x] = 0
+					copy[y][x] = 0
 				}
 			} else {
 				if alive_count == 3 {
-					board.Board[y][x] = 1
+					copy[y][x] = 1
 				}
 			}
 		}
 	}
+	board.Board = copy
 }
