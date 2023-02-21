@@ -27,3 +27,7 @@ func (board *Board) Render() {
 	}
 	fmt.Print("\n")
 }
+
+func ClearTerm() {
+	fmt.Print("\033[H\033[2J")
+}

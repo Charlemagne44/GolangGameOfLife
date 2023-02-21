@@ -20,7 +20,7 @@ func main() {
 	height := flag.Int("h", 10, "height of the board")
 	width := flag.Int("w", 10, "width of the board")
 	turns := flag.Int("t", 10, "how many turns of the game to play")
-	sleep := flag.Int("s", 3, "seconds of sleep between each turn")
+	sleep := flag.Int("s", 1, "seconds of sleep between each turn")
 	probability := flag.Float64("p", 0.50, "probability starting cell is alive")
 	file := flag.String("f", "", "load a premade board from a file")
 	flag.Parse()
@@ -40,5 +40,6 @@ func main() {
 		board.Render()
 		board.NextState()
 		time.Sleep(time.Second * time.Duration(*sleep))
+		game.ClearTerm()
 	}
 }
